@@ -1,0 +1,927 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>全方位體重管理</title>
+
+    <!-- 內建專屬 App 圖示 (SVG Data URI) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cdefs%3E%3ClinearGradient id='bgGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23312e81' /%3E%3Cstop offset='100%25' stop-color='%230f172a' /%3E%3C/linearGradient%3E%3ClinearGradient id='flameGrad' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23ef4444' /%3E%3Cstop offset='50%25' stop-color='%23f97316' /%3E%3Cstop offset='100%25' stop-color='%23facc15' /%3E%3C/linearGradient%3E%3ClinearGradient id='blueGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2360a5fa' /%3E%3Cstop offset='100%25' stop-color='%233b82f6' /%3E%3C/linearGradient%3E%3Cfilter id='glow' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='10' result='blur' /%3E%3CfeComposite in='SourceGraphic' in2='blur' operator='over' /%3E%3C/filter%3E%3C/defs%3E%3Crect width='512' height='512' rx='115' fill='url(%23bgGrad)' /%3E%3Cpolygon points='256,60 420,155 420,355 256,450 92,355 92,155' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='16' /%3E%3Cpolygon points='256,100 380,175 380,335 256,410 132,335 132,175' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='8' /%3E%3Cpath d='M 150 350 L 150 230 L 256 310 L 362 230 L 362 350' fill='none' stroke='url(%23blueGrad)' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' filter='url(%23glow)'/%3E%3Cpath d='M 256 120 C 256 120 300 170 300 215 C 300 240 280 260 256 260 C 232 260 212 240 212 215 C 212 170 256 120 256 120 Z' fill='url(%23flameGrad)' filter='url(%23glow)'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cdefs%3E%3ClinearGradient id='bgGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23312e81' /%3E%3Cstop offset='100%25' stop-color='%230f172a' /%3E%3C/linearGradient%3E%3ClinearGradient id='flameGrad' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23ef4444' /%3E%3Cstop offset='50%25' stop-color='%23f97316' /%3E%3Cstop offset='100%25' stop-color='%23facc15' /%3E%3C/linearGradient%3E%3ClinearGradient id='blueGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2360a5fa' /%3E%3Cstop offset='100%25' stop-color='%233b82f6' /%3E%3C/linearGradient%3E%3Cfilter id='glow' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='10' result='blur' /%3E%3CfeComposite in='SourceGraphic' in2='blur' operator='over' /%3E%3C/filter%3E%3C/defs%3E%3Crect width='512' height='512' rx='115' fill='url(%23bgGrad)' /%3E%3Cpolygon points='256,60 420,155 420,355 256,450 92,355 92,155' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='16' /%3E%3Cpolygon points='256,100 380,175 380,335 256,410 132,335 132,175' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='8' /%3E%3Cpath d='M 150 350 L 150 230 L 256 310 L 362 230 L 362 350' fill='none' stroke='url(%23blueGrad)' stroke-width='36' stroke-linecap='round' stroke-linejoin='round' filter='url(%23glow)'/%3E%3Cpath d='M 256 120 C 256 120 300 170 300 215 C 300 240 280 260 256 260 C 232 260 212 240 212 215 C 212 170 256 120 256 120 Z' fill='url(%23flameGrad)' filter='url(%23glow)'/%3E%3C/svg%3E">
+    
+    <!-- 設定手機版 PWA (Progressive Web App) 模式，隱藏 Safari 網址列 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="體重管理">
+
+    <!-- 載入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body { -webkit-tap-highlight-color: transparent; }
+        .custom-scrollbar::-webkit-scrollbar { height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        @media print {
+            body { background-color: white !important; margin: 0; padding: 20px; }
+            .print\:hidden { display: none !important; }
+            .print\:bg-white { background-color: white !important; }
+            .print\:shadow-none { box-shadow: none !important; }
+            .print\:border-none { border: none !important; }
+        }
+    </style>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "react": "https://esm.sh/react@18.2.0",
+            "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+            "lucide-react": "https://esm.sh/lucide-react@0.344.0"
+        }
+    }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <div id="root"></div>
+
+    <script type="text/babel" data-type="module">
+        import React, { useState, useEffect, useMemo } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { Activity, BookOpen, PlusCircle, History, Target, Droplet, Flame, Utensils, CheckCircle2, AlertTriangle, Syringe, Settings, X, Brain, Wheat, BarChart2, Download, TrendingUp, Printer, CalendarDays, Edit3 } from 'lucide-react';
+
+        function App() {
+          const [activeTab, setActiveTab] = useState('strategy');
+          const [records, setRecords] = useState([]);
+          
+          const [moDay, setMoDay] = useState(4); 
+          const [showMoModal, setShowMoModal] = useState(false); 
+
+          const getDefaultDayType = (dateString, baseMoDay) => {
+            const targetDay = new Date(dateString).getDay();
+            const diff = (targetDay - baseMoDay + 7) % 7;
+            const sequence = ['補碳', '防暈', '運動回燃', '穩定', '減脂', '減脂', '低碳'];
+            return sequence[diff];
+          };
+
+          const todayStr = new Date().toISOString().split('T')[0];
+
+          const [formData, setFormData] = useState({
+            date: todayStr,
+            dayType: getDefaultDayType(todayStr, 4),
+            height: '', 
+            weight: '',
+            bodyFat: '',
+            visceralFat: '',
+            carbsBreakfast: '', 
+            carbsLunch: '', 
+            carbsDinner: '', 
+            proteinBreakfast: '',
+            proteinLunch: '',
+            proteinDinner: '',
+            foodLogBreakfast: [],
+            foodLogLunch: [],
+            foodLogDinner: [],
+            exercise: '無',
+            injection: false,
+            injectionDose: '', 
+            injectionSite: '', 
+            injectionReaction: '', 
+            notes: ''
+          });
+
+          // 自訂食物狀態
+          const [customFoods, setCustomFoods] = useState([
+            { id: 1, name: '蛋x2', protein: 12 },
+            { id: 2, name: '學校肉', protein: 28 },
+            { id: 3, name: '雞胸', protein: 45 },
+            { id: 4, name: '手掌魚肉', protein: 20 },
+            { id: 5, name: '高蛋白粉', protein: 20 }
+          ]);
+          const [showFoodManager, setShowFoodManager] = useState(false);
+          const [newFood, setNewFood] = useState({ name: '', protein: '' });
+
+          // 新增：自訂運動狀態
+          const [customExercises, setCustomExercises] = useState([
+            { id: 1, name: '快走 30~40 分鐘' },
+            { id: 2, name: '腳踏車' },
+            { id: 3, name: '輕重量訓練 (不爆)' }
+          ]);
+          const [showExerciseManager, setShowExerciseManager] = useState(false);
+          const [newExercise, setNewExercise] = useState('');
+
+          const dietAdvice = {
+            '減脂': '【穩定】蛋白質 100~110g，碳水 30~40g。',
+            '低碳': '【燃脂核心🔥】蛋白質 110~120g (稍高)，碳水 15~25g。',
+            '補碳': '【吃多是對的🔥】蛋白質 100g，碳水 80~120g。',
+            '防暈': '【防暈日】蛋白質 100~110g，碳水 40~60g (❌太低會暈)。',
+            '運動回燃': '【重要‼️】蛋白質 110~120g (運動要高)，碳水 30~50g。',
+            '穩定': '【觀察】蛋白質 100~110g，碳水 30~50g，均衡不爆碳。'
+          };
+
+          useEffect(() => {
+            const savedRecords = localStorage.getItem('weightManagementRecords');
+            if (savedRecords) {
+              const parsed = JSON.parse(savedRecords);
+              setRecords(parsed);
+              if (parsed.length > 0 && parsed[0].height) {
+                setFormData(prev => ({ ...prev, height: parsed[0].height }));
+              }
+            }
+            const savedFoods = localStorage.getItem('weightManagementFoods');
+            if (savedFoods) setCustomFoods(JSON.parse(savedFoods));
+
+            const savedExercises = localStorage.getItem('weightManagementExercises');
+            if (savedExercises) setCustomExercises(JSON.parse(savedExercises));
+
+            const savedMoDay = localStorage.getItem('weightManagementMODay');
+            if (savedMoDay) {
+              const parsedMoDay = Number(savedMoDay);
+              setMoDay(parsedMoDay);
+              setFormData(prev => ({ ...prev, dayType: getDefaultDayType(prev.date, parsedMoDay) }));
+            }
+          }, []);
+
+          useEffect(() => {
+            setFormData(prev => ({ ...prev, dayType: getDefaultDayType(prev.date, moDay) }));
+          }, [moDay]);
+
+          const smartAdvice = useMemo(() => {
+            if (records.length < 3) return { type: 'normal', msg: "✔ 持續記錄中，累積3天以上數據即可分析。" };
+            const sorted = [...records].sort((a, b) => new Date(b.date) - new Date(a.date));
+            const recentWeights = sorted.slice(0, 5).map(r => Number(r.weight)).filter(w => !isNaN(w) && w > 0);
+            if (recentWeights.length >= 5 && (Math.max(...recentWeights) - Math.min(...recentWeights) < 0.3)) {
+              return { type: 'alert', msg: "👉 5天體重停滯，建議增加「低碳日」" };
+            }
+            const recent3Weights = recentWeights.slice(0, 3);
+            if (recent3Weights.length >= 3 && (Math.max(...recent3Weights) - Math.min(...recent3Weights) < 0.2)) {
+              return { type: 'warning', msg: "👉 3天體重沒變，建議檢視碳水攝取量" };
+            }
+            return { type: 'success', msg: "✔ 體重正常變化中，請繼續保持！" };
+          }, [records]);
+
+          const saveRecord = (showAlert = true) => {
+            if (!formData.weight && !formData.injection) { 
+              alert('請至少填寫今日體重！'); 
+              return; 
+            }
+            const newRecords = [formData, ...records.filter(r => r.date !== formData.date)].sort((a, b) => new Date(b.date) - new Date(a.date));
+            setRecords(newRecords);
+            localStorage.setItem('weightManagementRecords', JSON.stringify(newRecords));
+            
+            if(showAlert === true) {
+              alert('紀錄已成功儲存！');
+            }
+            setActiveTab('dashboard'); 
+          };
+
+          const handleInputChange = (e) => {
+            const { name, value, type, checked } = e.target;
+            setFormData(prev => {
+              const newData = { ...prev, [name]: type === 'checkbox' ? checked : value };
+              if (name === 'date') newData.dayType = getDefaultDayType(value, moDay);
+              return newData;
+            });
+          };
+
+          const addFoodLog = (mealKey, foodName, foodProtein) => {
+            if (!foodProtein || Number(foodProtein) <= 0) return;
+            const logKey = mealKey.replace('protein', 'foodLog'); 
+
+            setFormData(prev => {
+              const currentLog = prev[logKey] || [];
+              const newLog = [...currentLog, { id: Date.now() + Math.random(), name: foodName, protein: Number(foodProtein) }];
+              const newTotal = newLog.reduce((sum, item) => sum + item.protein, 0);
+              return { ...prev, [logKey]: newLog, [mealKey]: newTotal };
+            });
+          };
+
+          const removeFoodLog = (mealKey, logId) => {
+            const logKey = mealKey.replace('protein', 'foodLog');
+            setFormData(prev => {
+              const currentLog = prev[logKey] || [];
+              const newLog = currentLog.filter(item => item.id !== logId);
+              const newTotal = newLog.reduce((sum, item) => sum + item.protein, 0);
+              return { ...prev, [logKey]: newLog, [mealKey]: newTotal || '' };
+            });
+          };
+
+          const addCustomFood = () => {
+            if (!newFood.name || !newFood.protein) return;
+            const updatedFoods = [...customFoods, { id: Date.now(), name: newFood.name, protein: Number(newFood.protein) }];
+            setCustomFoods(updatedFoods); localStorage.setItem('weightManagementFoods', JSON.stringify(updatedFoods)); setNewFood({ name: '', protein: '' });
+          };
+          const removeCustomFood = (id) => {
+            const updatedFoods = customFoods.filter(f => f.id !== id);
+            setCustomFoods(updatedFoods); localStorage.setItem('weightManagementFoods', JSON.stringify(updatedFoods));
+          };
+
+          // 新增：處理自訂運動
+          const addCustomExercise = () => {
+            if (!newExercise) return;
+            const updatedExercises = [...customExercises, { id: Date.now(), name: newExercise }];
+            setCustomExercises(updatedExercises); 
+            localStorage.setItem('weightManagementExercises', JSON.stringify(updatedExercises)); 
+            setNewExercise('');
+          };
+          const removeCustomExercise = (id) => {
+            const updatedExercises = customExercises.filter(e => e.id !== id);
+            setCustomExercises(updatedExercises); 
+            localStorage.setItem('weightManagementExercises', JSON.stringify(updatedExercises));
+            // 如果刪除的剛好是目前選中的運動，重置為 '無'
+            if (customExercises.find(e => e.id === id)?.name === formData.exercise) {
+               setFormData(prev => ({...prev, exercise: '無'}));
+            }
+          };
+
+          const calculateBMI = (w, h) => { return (!w || !h) ? '-' : (w / Math.pow(h / 100, 2)).toFixed(1); };
+          const totalProtein = (Number(formData.proteinBreakfast) || 0) + (Number(formData.proteinLunch) || 0) + (Number(formData.proteinDinner) || 0);
+
+          const exportToCSV = () => {
+            if (records.length === 0) { alert('目前沒有資料可以匯出喔！'); return; }
+            const headers = ['日期', '類型', '身高(cm)', '體重(kg)', 'BMI', '體脂率(%)', '內臟脂肪', '早餐碳水(拳)', '午餐碳水(拳)', '晚餐碳水(拳)', '早餐蛋白明細', '午餐蛋白明細', '晚餐蛋白明細', '運動', '打MO', '劑量(mg)', 'MO部位', 'MO反應'];
+            
+            const formatLogs = (logs, fallbackTotal) => {
+                if (logs && logs.length > 0) return `${fallbackTotal}g [${logs.map(l => `${l.name}(${l.protein}g)`).join(' + ')}]`;
+                return fallbackTotal ? `${fallbackTotal}g` : '';
+            };
+
+            const csvRows = [headers.join(',')];
+            records.forEach(r => {
+              const row = [r.date, r.dayType, r.height || '', r.weight || '', calculateBMI(r.weight, r.height), r.bodyFat || '', r.visceralFat || '', r.carbsBreakfast || '', r.carbsLunch || '', r.carbsDinner || '', 
+                           formatLogs(r.foodLogBreakfast, r.proteinBreakfast), 
+                           formatLogs(r.foodLogLunch, r.proteinLunch), 
+                           formatLogs(r.foodLogDinner, r.proteinDinner), 
+                           r.exercise || '無', 
+                           r.injection ? '是' : '否', r.injectionDose || '', r.injectionSite || '', r.injectionReaction || ''];
+              csvRows.push(row.map(cell => `"${cell}"`).join(','));
+            });
+            const blob = new Blob(["\uFEFF" + csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob); const link = document.createElement('a'); link.href = url;
+            link.setAttribute('download', `體重管理紀錄_${todayStr}.csv`);
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
+          };
+
+          // --- 視圖渲染函數 ---
+
+          const renderStrategyView = () => (
+            <div className="space-y-5 pb-24 animate-in fade-in duration-300">
+              
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-4 md:p-5 text-white shadow-sm flex items-center justify-between">
+                <div className="flex flex-col mr-2 shrink-0">
+                  <h2 className="text-xl md:text-2xl font-black flex items-center"><Target className="mr-1.5 w-6 h-6" /> 真正目標</h2>
+                  <span className="text-blue-100 text-xs font-medium mt-0.5">體脂才是關鍵</span>
+                </div>
+                <div className="flex space-x-2 w-full justify-end">
+                  <div className="bg-white/20 rounded-xl p-2 md:p-3 backdrop-blur-sm text-center flex-1 max-w-[110px]">
+                    <div className="font-black text-sm md:text-base">🎯 35%</div>
+                    <div className="text-[10px] md:text-xs mt-0.5 text-white/90 font-medium">77~80kg</div>
+                  </div>
+                  <div className="bg-white/20 rounded-xl p-2 md:p-3 backdrop-blur-sm text-center flex-1 max-w-[110px]">
+                    <div className="font-black text-sm md:text-base">🎯 30%</div>
+                    <div className="text-[10px] md:text-xs mt-0.5 text-white/90 font-medium">70~74kg</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-red-50 rounded-2xl p-4 shadow-sm border border-red-200 flex items-center justify-between">
+                <h3 className="text-lg font-bold flex items-center text-red-800 m-0">
+                  <CalendarDays className="mr-2 text-red-600 w-6 h-6" /> 打 MO 日
+                </h3>
+                <select
+                  value={moDay}
+                  onChange={(e) => {
+                    const newDay = Number(e.target.value);
+                    setMoDay(newDay);
+                    localStorage.setItem('weightManagementMODay', newDay);
+                  }}
+                  className="w-32 bg-white border-2 border-red-300 text-red-900 text-base rounded-xl p-2 font-bold shadow-sm focus:ring-red-500 focus:border-red-500 cursor-pointer text-center outline-none"
+                >
+                  {['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'].map((dayName, idx) => (
+                    <option key={idx} value={idx}>{dayName}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <h3 className="text-xl font-bold mb-4 flex items-center text-gray-800">🗓️ 專屬每週排程</h3>
+                <div className="grid grid-cols-2 grid-flow-row-dense gap-3">
+                  {[1, 2, 3, 4, 5, 6, 0].map((dayIndex) => {
+                    const diff = (dayIndex - moDay + 7) % 7;
+                    const dayNames = ['日', '一', '二', '三', '四', '五', '六'];
+                    
+                    const getDayInfo = (d) => {
+                      const info = {
+                        0: { name: '補碳＋打針🔥', pro: '100g', carb: '80~120g', note: '這天吃多是對的', bg: 'bg-red-50 border-red-200 text-red-900 col-span-2 shadow-sm' },
+                        1: { name: '防暈日', pro: '100~110g', carb: '40~60g', note: '❌ 太低會暈', bg: 'bg-blue-50 border-blue-200 text-blue-900 col-span-2 shadow-sm' },
+                        2: { name: '運動回燃', pro: '110~120g', carb: '30~50g', note: '重要‼️ 有運動要高', bg: 'bg-green-50 border-green-200 text-green-900 col-span-1' },
+                        3: { name: '穩定', pro: '100~110g', carb: '30~50g', note: '均衡不爆碳', bg: 'bg-teal-50 border-teal-200 text-teal-900 col-span-1' },
+                        4: { name: '減脂', pro: '100~110g', carb: '30~40g', note: '維持缺口', bg: 'bg-gray-50 border-gray-200 text-gray-800 col-span-1' },
+                        5: { name: '減脂', pro: '100~110g', carb: '30~40g', note: '維持缺口', bg: 'bg-gray-50 border-gray-200 text-gray-800 col-span-1' },
+                        6: { name: '低碳🔥', pro: '110~120g', carb: '15~25g', note: '👉 這天是燃脂核心', bg: 'bg-orange-50 border-orange-300 text-orange-900 col-span-2 shadow-sm' }
+                      };
+                      return info[d];
+                    };
+                    
+                    const info = getDayInfo(diff);
+
+                    return (
+                      <div key={dayIndex} className={`p-3 rounded-xl border-2 flex flex-col transition-all ${info.bg}`}>
+                        <div className="flex justify-between items-center border-b border-black/10 pb-1.5 mb-2">
+                           <div className="font-bold opacity-80 text-sm">星期{dayNames[dayIndex]}</div>
+                           <div className="text-lg font-black">{info.name}</div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 mb-2 text-sm font-bold">
+                           <div className="bg-white/60 rounded-lg p-1.5 text-center">
+                             <div className="text-[10px] opacity-70 mb-0.5">🥚蛋白質</div>
+                             <div>{info.pro}</div>
+                           </div>
+                           <div className="bg-white/60 rounded-lg p-1.5 text-center">
+                             <div className="text-[10px] opacity-70 mb-0.5">🍚碳水</div>
+                             <div>{info.carb}</div>
+                           </div>
+                        </div>
+                        <div className="text-xs font-black text-center mt-auto opacity-90">{info.note}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 h-full">
+                  <h3 className="text-xl font-bold mb-4 flex items-center text-gray-800">
+                    <Brain className="mr-2 text-pink-500 w-6 h-6" /> 精準版總表
+                  </h3>
+                  <div className="overflow-x-auto rounded-xl border border-gray-200 custom-scrollbar">
+                    <table className="min-w-full text-sm text-left text-gray-700 whitespace-nowrap">
+                      <thead className="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+                        <tr><th className="px-3 py-3">類型</th><th className="px-3 py-3">碳水 (g)</th><th className="px-3 py-3">蛋白 (g) / 重點</th></tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-100 font-medium">
+                        <tr className="bg-white"><td className="px-3 py-3 font-bold text-gray-800">減脂日</td><td className="px-3 py-3 text-gray-600">30~40g</td><td className="px-3 py-3">100~110g</td></tr>
+                        <tr className="bg-orange-50/30"><td className="px-3 py-3 font-bold text-orange-700">低碳日</td><td className="px-3 py-3 font-bold text-orange-600">15~25g</td><td className="px-3 py-3 text-orange-700">110~120g (燃脂)</td></tr>
+                        <tr className="bg-red-50/30"><td className="px-3 py-3 font-bold text-red-700">補碳日🔥</td><td className="px-3 py-3 font-bold text-red-600">80~120g</td><td className="px-3 py-3 text-red-700">100g (吃多是對的)</td></tr>
+                        <tr className="bg-blue-50/30"><td className="px-3 py-3 font-bold text-blue-700">防暈日</td><td className="px-3 py-3 font-bold text-blue-600">40~60g</td><td className="px-3 py-3 text-blue-700">100~110g (防暈)</td></tr>
+                        <tr className="bg-green-50/30"><td className="px-3 py-3 font-bold text-green-700">運動回燃</td><td className="px-3 py-3 font-bold text-green-600">30~50g</td><td className="px-3 py-3 text-green-700">110~120g (要高)</td></tr>
+                        <tr className="bg-teal-50/30"><td className="px-3 py-3 font-bold text-teal-700">穩定日</td><td className="px-3 py-3 text-teal-600">30~50g</td><td className="px-3 py-3 text-teal-700">100~110g</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-5">
+                  <div className="bg-indigo-50 rounded-2xl p-4 shadow-sm border border-indigo-100 flex flex-col">
+                    <h3 className="text-base font-bold mb-2 flex items-center text-indigo-800">
+                      <Utensils className="mr-2 text-indigo-500 w-5 h-5" /> 晚餐蛋白質搭配
+                    </h3>
+                    <div className="grid grid-cols-3 gap-2 flex-1">
+                      <div className="bg-white p-2.5 rounded-xl shadow-sm border border-indigo-100 text-center flex flex-col justify-between">
+                        <div>
+                          <div className="font-bold text-indigo-900 text-xs">標準情況</div>
+                          <div className="text-[10px] text-gray-500 mt-1 leading-tight font-medium">雞肉 1 份<br/>+ 蛋/優格</div>
+                        </div>
+                        <div className="font-black text-indigo-600 text-lg mt-1">45~55g</div>
+                      </div>
+                      <div className="bg-white p-2.5 rounded-xl shadow-sm border border-indigo-100 text-center flex flex-col justify-between">
+                        <div>
+                          <div className="font-bold text-indigo-900 text-xs">不餓情況</div>
+                          <div className="text-[10px] text-gray-500 mt-1 leading-tight font-medium">雞肉 1 份<br/>+ 優格</div>
+                        </div>
+                        <div className="font-black text-indigo-600 text-lg mt-1">40~50g</div>
+                      </div>
+                      <div className="bg-white p-2.5 rounded-xl shadow-sm border border-red-100 text-center flex flex-col justify-between">
+                        <div>
+                          <div className="font-bold text-red-700 text-xs">不夠 (餓)</div>
+                          <div className="text-[10px] text-gray-500 mt-1 leading-tight font-medium">雞 + 蛋<br/>+ 優格</div>
+                        </div>
+                        <div className="font-black text-red-500 text-lg mt-1">55~65g</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+
+          const renderRecordView = () => (
+            <div className="space-y-5 pb-24 animate-in slide-in-from-right-4 duration-300">
+              
+              <div className={`p-4 rounded-2xl border flex items-start space-x-3 shadow-sm ${
+                smartAdvice.type === 'alert' ? 'bg-red-50 border-red-200 text-red-800' : 
+                smartAdvice.type === 'warning' ? 'bg-orange-50 border-orange-200 text-orange-800' : 
+                smartAdvice.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' :
+                'bg-blue-50 border-blue-200 text-blue-800'
+              }`}>
+                <Brain className={`w-8 h-8 flex-shrink-0 mt-0.5 ${smartAdvice.type === 'alert' ? 'text-red-500' : smartAdvice.type === 'warning' ? 'text-orange-500' : smartAdvice.type === 'success' ? 'text-green-500' : 'text-blue-500'}`} />
+                <div><h4 className="font-bold text-base mb-1">智能教練分析</h4><p className="text-sm font-medium">{smartAdvice.msg}</p></div>
+              </div>
+
+              <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <h2 className="text-2xl font-bold mb-4 text-gray-800 flex items-center">
+                  <PlusCircle className="mr-2 text-indigo-500 w-6 h-6" /> 每日紀錄
+                </h2>
+                
+                <div className="space-y-5">
+                  <div className="flex space-x-3 items-end">
+                    <div className="flex-1">
+                      <label className="block text-sm font-bold text-gray-700 mb-1.5">日期</label>
+                      <input type="date" name="date" value={formData.date} onChange={handleInputChange} className="w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl p-2.5 shadow-inner" />
+                    </div>
+                    <div className="flex-1 relative">
+                      <label className="block text-sm font-bold text-gray-700 mb-1.5">今日類型</label>
+                      <select name="dayType" value={formData.dayType} onChange={handleInputChange} className="w-full bg-indigo-50 border border-indigo-200 text-indigo-900 text-sm rounded-xl p-2.5 font-black shadow-inner cursor-pointer appearance-none">
+                        <option value="減脂">減脂</option>
+                        <option value="低碳">低碳</option>
+                        <option value="補碳">補碳</option>
+                        <option value="防暈">防暈</option>
+                        <option value="運動回燃">運動回燃</option>
+                        <option value="穩定">穩定</option>
+                      </select>
+                    </div>
+                    <div className="w-[4.5rem] shrink-0">
+                      <label className="block text-xs font-bold text-transparent mb-1.5 select-none">MO</label>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (!formData.injection) {
+                            handleInputChange({ target: { name: 'injection', type: 'checkbox', checked: true } });
+                          }
+                          setShowMoModal(true);
+                        }}
+                        className={`w-full aspect-square rounded-xl border-2 flex flex-col items-center justify-center transition-all ${formData.injection ? 'bg-red-50 border-red-400 text-red-600 shadow-md scale-105' : 'bg-gray-50 border-gray-200 text-gray-400 hover:bg-gray-100'}`}
+                      >
+                        <Syringe className={`w-5 h-5 mb-0.5 ${formData.injection ? 'text-red-500 animate-pulse' : ''}`} />
+                        <span className="text-[11px] font-black">{formData.injection ? '已打' : '打MO'}</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="bg-indigo-50/50 rounded-2xl p-4 border border-indigo-100">
+                    <h3 className="text-base font-bold text-indigo-900 mb-3 flex items-center"><Target className="w-5 h-5 mr-1.5"/> 身體數據</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+                      <div className="col-span-1 md:col-span-1">
+                        <label className="block text-xs font-bold text-gray-600 mb-1">身高 (cm)</label>
+                        <input type="number" step="0.1" name="height" value={formData.height} onChange={handleInputChange} className="w-full bg-white border border-gray-200 text-base rounded-xl p-2.5 text-center font-bold shadow-sm" />
+                      </div>
+                      <div className="col-span-1 md:col-span-1">
+                        <label className="block text-xs font-bold text-gray-600 mb-1">體重 (kg)</label>
+                        <input type="number" step="0.1" name="weight" value={formData.weight} onChange={handleInputChange} className="w-full bg-white border border-indigo-300 text-base rounded-xl p-2.5 text-center font-black text-indigo-700 shadow-sm" />
+                      </div>
+                      <div className="col-span-2 md:col-span-1">
+                        <label className="block text-xs font-bold text-gray-600 mb-1 text-center md:text-left">BMI</label>
+                        <div className="w-full bg-indigo-100 border border-indigo-300 text-indigo-900 text-base rounded-xl p-2.5 text-center font-black shadow-sm">{calculateBMI(formData.weight, formData.height)}</div>
+                      </div>
+                      <div className="col-span-1 md:col-span-1">
+                        <label className="block text-xs font-bold text-gray-600 mb-1">體脂 (%)</label>
+                        <input type="number" step="0.1" name="bodyFat" value={formData.bodyFat} onChange={handleInputChange} className="w-full bg-white border border-gray-200 text-base rounded-xl p-2.5 text-center font-bold shadow-sm" />
+                      </div>
+                      <div className="col-span-1 md:col-span-1">
+                        <label className="block text-xs font-bold text-gray-600 mb-1">內臟脂肪</label>
+                        <input type="number" step="0.5" name="visceralFat" value={formData.visceralFat} onChange={handleInputChange} className="w-full bg-white border border-gray-200 text-base rounded-xl p-2.5 text-center font-bold shadow-sm" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-indigo-50 border border-indigo-200 text-indigo-900 p-4 rounded-xl flex items-start space-x-3 shadow-sm">
+                     <BookOpen className="w-6 h-6 flex-shrink-0 mt-0.5 text-indigo-600" />
+                     <div className="text-sm"><strong className="block mb-1 text-base text-indigo-800">今日 {formData.dayType} 建議：</strong>{dietAdvice[formData.dayType]}</div>
+                  </div>
+
+                  <div className="bg-amber-50 rounded-2xl p-4 border border-amber-100">
+                     <h3 className="text-base font-bold text-amber-900 mb-3 flex flex-col sm:flex-row sm:items-center">
+                        <div className="flex items-center"><Wheat className="w-5 h-5 mr-1.5"/> 碳水攝取 <span className="text-sm font-bold ml-1 text-amber-700">(單位：拳)</span></div>
+                        <span className="text-[11px] font-medium text-amber-600 mt-1 sm:mt-0 sm:ml-3 bg-amber-100/50 px-2 py-0.5 rounded-lg w-fit">💡 1個女生拳 ≈ 60g 碳水</span>
+                     </h3>
+                     <div className="grid grid-cols-3 gap-3">
+                      {['carbsBreakfast', 'carbsLunch', 'carbsDinner'].map((meal, idx) => {
+                        const labels = ['早', '午', '晚'];
+                        return (
+                          <div key={meal} className="text-center">
+                            <label className="block text-sm font-bold text-amber-800 mb-1.5">{labels[idx]}</label>
+                            <input type="number" step="0.1" name={meal} value={formData[meal]} onChange={handleInputChange} placeholder="拳" className="w-full bg-white border border-amber-300 text-base rounded-xl p-2.5 text-center font-bold shadow-sm" />
+                          </div>
+                        );
+                      })}
+                     </div>
+                  </div>
+
+                  <div className="bg-orange-50 rounded-2xl p-4 border border-orange-100">
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-base font-bold text-orange-900 flex items-center"><Utensils className="w-5 h-5 mr-1.5"/> 蛋白質 (目標: 100~120g)</h3>
+                      <span className={`text-xs font-black px-3 py-1.5 rounded-lg text-center ${totalProtein >= 100 ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-orange-200 text-orange-900 border border-orange-300'}`}>
+                        總計 {totalProtein}g {totalProtein >= 100 ? '✔' : ''}
+                      </span>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      {['proteinBreakfast', 'proteinLunch', 'proteinDinner'].map((meal, idx) => {
+                        const labels = ['早', '午', '晚'];
+                        const logKey = meal.replace('protein', 'foodLog');
+                        const logs = formData[logKey] || [];
+
+                        return (
+                          <div key={meal} className="flex flex-col bg-white p-3 rounded-xl border border-orange-100 shadow-sm">
+                            <div className="flex items-center space-x-2">
+                              <span className="w-6 text-lg font-black text-gray-800 shrink-0">{labels[idx]}</span>
+                              <span className="w-12 text-lg font-black text-indigo-700 shrink-0 text-right">{formData[meal] || 0}g</span>
+                              
+                              <div className="flex overflow-x-auto gap-2 custom-scrollbar flex-1 items-center pb-1">
+                                <div className="flex items-center space-x-1 bg-gray-50 p-1 rounded-lg shrink-0 border border-gray-200">
+                                  <input id={`manual_${meal}`} type="number" placeholder="自訂" className="w-14 bg-white border border-gray-200 text-sm rounded-md p-1.5 text-center font-bold outline-none focus:border-indigo-400" />
+                                  <button onClick={(e) => {
+                                    e.preventDefault();
+                                    const inputEl = document.getElementById(`manual_${meal}`);
+                                    if (inputEl && inputEl.value) { addFoodLog(meal, '手動', inputEl.value); inputEl.value = ''; }
+                                  }} className="bg-gray-800 text-white px-2 py-1.5 rounded-md text-sm font-black">+</button>
+                                </div>
+                                <div className="h-6 w-px bg-gray-200 shrink-0 mx-1"></div>
+                                {meal === 'proteinDinner' && (
+                                  <>
+                                    <button onClick={(e) => { e.preventDefault(); addFoodLog(meal, '標準', 50); }} className="text-sm bg-indigo-50 text-indigo-800 px-3 py-1.5 rounded-lg whitespace-nowrap font-bold border border-indigo-200 shrink-0">+標準(50g)</button>
+                                    <button onClick={(e) => { e.preventDefault(); addFoodLog(meal, '不餓', 45); }} className="text-sm bg-indigo-50 text-indigo-800 px-3 py-1.5 rounded-lg whitespace-nowrap font-bold border border-indigo-200 shrink-0">+不餓(45g)</button>
+                                    <button onClick={(e) => { e.preventDefault(); addFoodLog(meal, '不夠', 60); }} className="text-sm bg-red-50 text-red-800 px-3 py-1.5 rounded-lg whitespace-nowrap font-bold border border-red-200 shrink-0">+不夠(60g)</button>
+                                  </>
+                                )}
+                                {customFoods.map(food => (
+                                  <button key={food.id} onClick={(e) => { e.preventDefault(); addFoodLog(meal, food.name, food.protein); }} className="text-sm bg-orange-50 text-orange-800 px-3 py-1.5 rounded-lg whitespace-nowrap font-bold border border-orange-200 shrink-0">
+                                    +{food.name}({food.protein}g)
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                            {logs.length > 0 && (
+                              <div className="flex flex-wrap gap-1.5 mt-2 pt-2 border-t border-gray-50">
+                                {logs.map(log => (
+                                  <span key={log.id} className="inline-flex items-center bg-indigo-50 text-indigo-900 text-xs px-2 py-1 rounded-md font-bold border border-indigo-100">
+                                    {log.name}({log.protein}g)
+                                    <X className="w-3.5 h-3.5 ml-1 cursor-pointer hover:text-red-500 bg-white rounded-full" onClick={() => removeFoodLog(meal, log.id)}/>
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-orange-200/50">
+                      <button onClick={(e) => { e.preventDefault(); setShowFoodManager(!showFoodManager); }} className="text-sm font-bold text-orange-700 flex items-center">
+                        <Settings className="w-4 h-4 mr-1.5" /> 管理食物快捷鍵
+                      </button>
+                      {showFoodManager && (
+                        <div className="mt-3 p-4 bg-white rounded-xl border border-orange-200 shadow-inner">
+                          <div className="flex space-x-2 mb-3">
+                            <input type="text" value={newFood.name} onChange={(e) => setNewFood({...newFood, name: e.target.value})} placeholder="名稱" className="flex-1 bg-gray-50 border border-gray-300 text-sm rounded-lg p-2.5" />
+                            <input type="number" value={newFood.protein} onChange={(e) => setNewFood({...newFood, protein: e.target.value})} placeholder="克數" className="w-16 bg-gray-50 border border-gray-300 text-sm rounded-lg p-2.5 text-center font-bold" />
+                            <button onClick={(e) => { e.preventDefault(); addCustomFood(); }} className="bg-orange-600 text-white text-sm px-4 rounded-lg font-bold shadow-sm">新增</button>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {customFoods.map(food => (
+                              <div key={food.id} className="flex items-center bg-gray-100 text-gray-800 text-xs px-3 py-1.5 rounded-lg border border-gray-300 font-bold">
+                                {food.name} ({food.protein}g)
+                                <button onClick={(e) => { e.preventDefault(); removeCustomFood(food.id); }} className="ml-2 text-gray-400 bg-white rounded-full"><X className="w-3 h-3" /></button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 新增：自訂管理運動紀錄區塊 */}
+                  <div className="bg-blue-50 rounded-2xl p-4 border border-blue-100">
+                    <div className="flex justify-between items-center mb-3">
+                      <h3 className="text-base font-bold text-blue-900 flex items-center"><Activity className="w-5 h-5 mr-1.5"/> 運動紀錄 <span className="text-sm font-normal ml-2 text-blue-700">(中低強度)</span></h3>
+                    </div>
+                    <select name="exercise" value={formData.exercise} onChange={handleInputChange} className="w-full bg-white border border-blue-300 text-base rounded-xl p-3 font-bold text-blue-900 shadow-sm focus:border-blue-500 mb-3">
+                      <option value="無">休息日 (無運動)</option>
+                      {customExercises.map(ex => (
+                         <option key={ex.id} value={ex.name}>{ex.name}</option>
+                      ))}
+                    </select>
+
+                    <div className="pt-3 border-t border-blue-200/50">
+                      <button onClick={(e) => { e.preventDefault(); setShowExerciseManager(!showExerciseManager); }} className="text-sm font-bold text-blue-700 flex items-center hover:text-blue-900 transition-colors">
+                        <Settings className="w-4 h-4 mr-1.5" /> 管理運動項目
+                      </button>
+                      
+                      {showExerciseManager && (
+                        <div className="mt-3 p-4 bg-white rounded-xl border border-blue-200 shadow-inner animate-in fade-in">
+                          <div className="flex space-x-2 mb-3">
+                            <input type="text" value={newExercise} onChange={(e) => setNewExercise(e.target.value)} placeholder="運動名稱 (如: 游泳 30分)" className="flex-1 bg-gray-50 border border-gray-300 text-sm rounded-lg p-2.5" />
+                            <button onClick={(e) => { e.preventDefault(); addCustomExercise(); }} className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 rounded-lg font-bold shadow-sm transition-colors">新增</button>
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            {customExercises.map(ex => (
+                              <div key={ex.id} className="flex items-center bg-gray-100 text-gray-800 text-xs px-3 py-1.5 rounded-lg border border-gray-300 font-bold">
+                                {ex.name}
+                                <button onClick={(e) => { e.preventDefault(); removeCustomExercise(ex.id); }} className="ml-2 text-gray-400 bg-white rounded-full hover:text-red-500 transition-colors"><X className="w-3 h-3" /></button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <button onClick={() => saveRecord(true)} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-2xl text-xl px-5 py-4 text-center shadow-lg active:scale-95 transition-transform">
+                    儲存今日紀錄
+                  </button>
+                </div>
+              </div>
+
+              {/* MO 專屬彈出視窗：按確認自動儲存 */}
+              {showMoModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+                  <div className="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-in zoom-in-95 duration-200">
+                    <div className="flex justify-between items-center mb-5 border-b border-gray-100 pb-3">
+                      <h3 className="text-xl font-black text-red-800 flex items-center"><Flame className="w-6 h-6 mr-2 text-red-600"/> 打 MO 詳細紀錄</h3>
+                      <button onClick={() => setShowMoModal(false)} className="bg-gray-100 rounded-full p-1"><X className="w-5 h-5 text-gray-500"/></button>
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-1.5">劑量 (mg)</label>
+                        <input type="number" step="0.1" name="injectionDose" value={formData.injectionDose} onChange={handleInputChange} placeholder="例如: 2.5" className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-lg font-bold text-center text-red-700" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-1.5">部位</label>
+                        <select name="injectionSite" value={formData.injectionSite} onChange={handleInputChange} className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-lg font-bold text-gray-800">
+                          <option value="">請選擇部位</option>
+                          <option value="左腹">左腹</option>
+                          <option value="右腹">右腹</option>
+                          <option value="左腿">左腿</option>
+                          <option value="右腿">右腿</option>
+                          <option value="左臂">左臂</option>
+                          <option value="右臂">右臂</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-1.5">反應</label>
+                        <input type="text" name="injectionReaction" value={formData.injectionReaction} onChange={handleInputChange} placeholder="如: 正常、微痛..." className="w-full bg-gray-50 border border-gray-200 rounded-xl p-3 text-base font-bold text-center" />
+                      </div>
+                      <div className="pt-2 flex space-x-3">
+                        <button onClick={() => {
+                          handleInputChange({ target: { name: 'injection', type: 'checkbox', checked: false } });
+                          setShowMoModal(false);
+                        }} className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold rounded-xl p-3">取消打MO</button>
+                        
+                        <button onClick={() => {
+                          setShowMoModal(false);
+                          saveRecord(false); 
+                        }} className="flex-[2] bg-red-600 hover:bg-red-700 text-white font-black rounded-xl p-3 shadow-md">確認並儲存</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+
+          const renderDashboardView = () => {
+            const chartData = [...records].filter(r => r.weight).slice(0, 7).reverse();
+            const weights = chartData.map(d => Number(d.weight));
+            const minW = weights.length ? Math.min(...weights) - 1 : 0; 
+            const maxW = weights.length ? Math.max(...weights) + 1 : 100;
+            
+            const bodyFats = chartData.map(d => Number(d.bodyFat)).filter(v => !isNaN(v) && v > 0);
+            const minBF = bodyFats.length ? Math.min(...bodyFats) - 1 : 0;
+            const maxBF = bodyFats.length ? Math.max(...bodyFats) + 1 : 100;
+
+            const injectionRecords = records.filter(r => r.injection).sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            return (
+              <div className="space-y-6 pb-24 animate-in fade-in duration-300 print:pb-0 print:space-y-4">
+                <div className="flex justify-between items-center mb-5 px-2 print:hidden">
+                  <div><h2 className="text-2xl font-bold text-gray-800 flex items-center"><BarChart2 className="mr-2 text-indigo-500 w-7 h-7" /> 數據報表</h2></div>
+                  <button onClick={exportToCSV} className="bg-green-600 hover:bg-green-700 text-white text-sm font-bold py-2.5 px-4 rounded-xl flex items-center shadow-sm">
+                    <Download className="w-4 h-4 mr-1.5" /> 匯出 CSV
+                  </button>
+                </div>
+
+                {chartData.length < 2 ? (
+                  <div className="bg-white rounded-2xl p-10 text-center shadow-sm border border-gray-100 print:hidden">
+                    <TrendingUp className="w-20 h-20 text-gray-300 mx-auto mb-4" />
+                    <p className="text-gray-500 text-lg font-medium">累積至少 2 天的紀錄，就能看趨勢圖表囉！</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-gray-100 print:hidden">
+                      <h3 className="text-lg font-bold text-indigo-900 mb-5 flex items-center"><Target className="w-5 h-5 mr-2"/> 體重趨勢 <span className="text-sm font-normal ml-2 text-gray-500">(近7次)</span></h3>
+                      <div className="h-48 flex items-end space-x-3 md:space-x-5">
+                        {chartData.map((d, i) => {
+                          const val = Number(d.weight);
+                          const pct = Math.max(5, ((val - minW) / (maxW - minW)) * 100);
+                          return (
+                            <div key={i} className="flex flex-col items-center flex-1 h-full justify-end group relative cursor-pointer">
+                              <div className="opacity-0 group-hover:opacity-100 transition-opacity text-sm text-white font-bold mb-1 absolute -top-9 bg-indigo-900 px-3 py-1.5 rounded-lg shadow-xl whitespace-nowrap z-10 pointer-events-none">
+                                BMI: {calculateBMI(d.weight, d.height)}
+                              </div>
+                              <span className="text-xs md:text-sm font-black text-gray-700 mb-2">{val}</span>
+                              <div style={{ height: `${pct}%` }} className="w-full bg-indigo-500 rounded-t-lg opacity-80 group-hover:opacity-100 transition-all shadow-sm"></div>
+                              <span className="text-[10px] md:text-xs text-gray-500 mt-2 truncate w-full text-center font-bold">{d.date.slice(5)}</span>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    </div>
+
+                    {bodyFats.length > 1 && (
+                      <div className="bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-gray-100 print:hidden">
+                        <h3 className="text-lg font-bold text-pink-700 mb-5 flex items-center"><Activity className="w-5 h-5 mr-2"/> 體脂率趨勢 <span className="text-sm font-normal ml-2 text-gray-500">(近7次)</span></h3>
+                        <div className="h-48 flex items-end space-x-3 md:space-x-5">
+                          {chartData.filter(d => d.bodyFat).map((d, i) => {
+                            const val = Number(d.bodyFat);
+                            const pct = Math.max(5, ((val - minBF) / (maxBF - minBF)) * 100);
+                            return (
+                              <div key={i} className="flex flex-col items-center flex-1 h-full justify-end group">
+                                <span className="text-xs md:text-sm font-black text-gray-700 mb-2">{val}%</span>
+                                <div style={{ height: `${pct}%` }} className="w-full bg-pink-400 rounded-t-lg opacity-80 group-hover:opacity-100 transition-all shadow-sm"></div>
+                                <span className="text-[10px] md:text-xs text-gray-500 mt-2 truncate w-full text-center font-bold">{d.date.slice(5)}</span>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
+
+                <div className="bg-red-50 rounded-2xl p-5 shadow-sm border border-red-200 overflow-hidden print:bg-white print:border-none print:shadow-none print:p-0">
+                  <div className="flex justify-between items-center mb-4">
+                    <div>
+                      <h3 className="text-xl font-black text-red-800 flex items-center print:text-black"><Syringe className="w-6 h-6 mr-2" /> MO🔥 專屬紀錄表</h3>
+                      <p className="text-sm text-red-600 font-medium print:text-gray-500 mt-1">追蹤打MO身體變化</p>
+                    </div>
+                    <button onClick={() => window.print()} className="bg-red-600 hover:bg-red-700 text-white text-sm font-bold py-2 px-3 rounded-xl flex items-center shadow-md print:hidden">
+                      <Printer className="w-4 h-4 mr-1.5" /> 列印
+                    </button>
+                  </div>
+                  
+                  {injectionRecords.length === 0 ? (
+                    <div className="bg-white/60 rounded-xl p-6 text-center border border-red-200/50 print:hidden"><p className="text-base text-red-500 font-bold">目前尚無打 MO 紀錄。</p></div>
+                  ) : (
+                    <div className="overflow-x-auto rounded-xl border border-red-300 shadow-inner custom-scrollbar print:overflow-visible print:shadow-none print:border-gray-400">
+                      <table className="min-w-full text-sm text-left text-red-900 whitespace-nowrap print:text-black print:border-collapse">
+                        <thead className="text-xs uppercase bg-red-200 font-black border-b-2 border-red-300 print:bg-gray-100 print:border-b-2 print:border-gray-500 print:text-black">
+                          <tr>
+                            <th className="px-4 py-3 print:border print:border-gray-400">日期</th>
+                            <th className="px-4 py-3 print:border print:border-gray-400">劑量</th>
+                            <th className="px-4 py-3 print:border print:border-gray-400">部位</th>
+                            <th className="px-4 py-3 print:border print:border-gray-400">體重</th>
+                            <th className="px-4 py-3 print:border print:border-gray-400">BMI</th>
+                            <th className="px-4 py-3 print:border print:border-gray-400">體脂</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-red-200 bg-white print:divide-gray-400 font-medium">
+                          {injectionRecords.map((r, i) => (
+                            <tr key={i} className="hover:bg-red-50 transition-colors">
+                              <td className="px-4 py-3 print:border print:border-gray-400">{r.date.slice(5)}</td>
+                              <td className="px-4 py-3 text-red-700 font-black bg-red-50/50 print:bg-transparent print:text-black print:border print:border-gray-400">{r.injectionDose ? `${r.injectionDose}mg` : '-'}</td>
+                              <td className="px-4 py-3 text-gray-800 font-bold print:text-black print:border print:border-gray-400">{r.injectionSite || '-'}</td>
+                              <td className="px-4 py-3 print:border print:border-gray-400">{r.weight}kg</td>
+                              <td className="px-4 py-3 text-gray-500 print:text-black print:border print:border-gray-400">{calculateBMI(r.weight, r.height)}</td>
+                              <td className="px-4 py-3 text-indigo-700 font-bold print:text-black print:border print:border-gray-400">{r.bodyFat ? `${r.bodyFat}%` : '-'}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          };
+
+          const renderHistoryView = () => (
+            <div className="space-y-6 pb-24 animate-in fade-in duration-300">
+              <h2 className="text-2xl font-bold mb-5 text-gray-800 flex items-center px-2"><History className="mr-2 text-indigo-500 w-7 h-7" /> 歷史追蹤</h2>
+              
+              {records.length === 0 ? (
+                <div className="bg-white rounded-2xl p-10 text-center shadow-sm border border-gray-100">
+                  <Droplet className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                  <p className="text-gray-500 text-lg font-bold">目前還沒有紀錄喔！</p>
+                </div>
+              ) : (
+                records.map((rec, idx) => {
+                  const totalPro = (Number(rec.proteinBreakfast) || 0) + (Number(rec.proteinLunch) || 0) + (Number(rec.proteinDinner) || 0);
+                  const hasProteinLog = rec.foodLogBreakfast?.length > 0 || rec.foodLogLunch?.length > 0 || rec.foodLogDinner?.length > 0;
+
+                  return (
+                    <div key={idx} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-200 relative overflow-hidden">
+                      {rec.injection && (
+                        <div className="absolute top-0 right-0 bg-red-500 text-white text-xs font-black px-3 py-1.5 rounded-bl-xl shadow-md">🔥 已打 MO</div>
+                      )}
+                      <div className="flex justify-between items-end mb-4 border-b border-gray-100 pb-3 mt-1">
+                        <div>
+                          <div className="text-base text-gray-800 font-black">{rec.date} <span className={`ml-2 px-2.5 py-1 rounded-lg text-xs font-bold shadow-sm border ${rec.dayType === '補碳' ? 'bg-red-50 text-red-700 border-red-200' : rec.dayType === '低碳' ? 'bg-orange-50 text-orange-700 border-orange-200' : 'bg-gray-50 text-gray-700 border-gray-200'}`}>{rec.dayType}日</span></div>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-4 gap-3 mb-4">
+                        <div className="text-center bg-gray-50 rounded-xl py-3 border border-gray-100 shadow-sm">
+                          <div className="text-xs text-gray-500 mb-0.5 font-bold">體重</div><div className="text-lg font-black text-gray-800">{rec.weight}</div>
+                        </div>
+                        <div className="text-center bg-gray-50 rounded-xl py-3 border border-gray-100 shadow-sm">
+                          <div className="text-xs text-gray-500 mb-0.5 font-bold">BMI</div><div className="text-lg font-black text-gray-600">{calculateBMI(rec.weight, rec.height)}</div>
+                        </div>
+                        <div className="text-center bg-gray-50 rounded-xl py-3 border border-gray-100 shadow-sm">
+                          <div className="text-xs text-gray-500 mb-0.5 font-bold">體脂</div><div className="text-lg font-black text-indigo-700">{rec.bodyFat}%</div>
+                        </div>
+                        <div className="text-center bg-gray-50 rounded-xl py-3 border border-gray-100 shadow-sm">
+                          <div className="text-xs text-gray-500 mb-0.5 font-bold">內臟脂</div><div className="text-lg font-black text-gray-800">{rec.visceralFat || '-'}</div>
+                        </div>
+                      </div>
+
+                      {rec.injection && (rec.injectionDose || rec.injectionSite || rec.injectionReaction) && (
+                        <div className="mb-4 bg-red-50 border border-red-200 rounded-xl p-3 text-sm flex flex-wrap gap-x-5 gap-y-2 text-red-900 shadow-inner">
+                          {rec.injectionDose && <div><span className="text-red-500 font-bold">劑量:</span> <span className="font-black">{rec.injectionDose} mg</span></div>}
+                          {rec.injectionSite && <div><span className="text-red-500 font-bold">部位:</span> <span className="font-black">{rec.injectionSite}</span></div>}
+                          {rec.injectionReaction && <div><span className="text-red-500 font-bold">反應:</span> <span className="font-black">{rec.injectionReaction}</span></div>}
+                        </div>
+                      )}
+
+                      <div className="flex flex-col gap-2.5 text-sm">
+                        <div className={`px-3 py-2 rounded-xl flex items-center font-bold shadow-sm ${totalPro >= 100 ? 'bg-green-50 text-green-800 border border-green-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+                          蛋白質總計: {totalPro}g {totalPro >= 100 ? '✔' : '❌'}
+                        </div>
+
+                        {hasProteinLog ? (
+                          <div className="bg-white p-3 rounded-xl text-xs border border-gray-100 shadow-inner space-y-1.5 font-medium text-gray-700">
+                             {rec.foodLogBreakfast?.length > 0 && <div className="flex items-start"><span className="font-black text-gray-800 w-8 shrink-0">早：</span> <span>{rec.foodLogBreakfast.map(f => `${f.name}(${f.protein}g)`).join(' + ')}</span></div>}
+                             {rec.foodLogLunch?.length > 0 && <div className="flex items-start"><span className="font-black text-gray-800 w-8 shrink-0">午：</span> <span>{rec.foodLogLunch.map(f => `${f.name}(${f.protein}g)`).join(' + ')}</span></div>}
+                             {rec.foodLogDinner?.length > 0 && <div className="flex items-start"><span className="font-black text-gray-800 w-8 shrink-0">晚：</span> <span>{rec.foodLogDinner.map(f => `${f.name}(${f.protein}g)`).join(' + ')}</span></div>}
+                          </div>
+                        ) : (
+                          <div className="bg-white p-2.5 rounded-xl text-xs border border-gray-100 shadow-inner font-medium text-gray-500">
+                             早: {rec.proteinBreakfast||0}g / 午: {rec.proteinLunch||0}g / 晚: {rec.proteinDinner||0}g (無明細)
+                          </div>
+                        )}
+
+                        {(rec.carbsBreakfast || rec.carbsLunch || rec.carbsDinner) && (
+                          <div className="bg-amber-50 text-amber-800 border border-amber-200 px-3 py-2 rounded-xl flex items-center font-bold shadow-sm mt-1">
+                            <Wheat className="w-4 h-4 mr-2 text-amber-600" /> 碳水: 早{rec.carbsBreakfast || 0} / 午{rec.carbsLunch || 0} / 晚{rec.carbsDinner || 0} 拳
+                          </div>
+                        )}
+
+                        {rec.exercise && rec.exercise !== '無' && (
+                          <div className="bg-blue-50 text-blue-800 border border-blue-200 px-3 py-2 rounded-xl flex items-center font-bold shadow-sm mt-1">
+                            <Activity className="w-4 h-4 mr-2 text-blue-600" /> 運動: {rec.exercise}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )
+                })
+              )}
+            </div>
+          );
+
+          return (
+            <div className="min-h-screen bg-gray-50 font-sans w-full md:max-w-2xl lg:max-w-4xl mx-auto relative shadow-2xl print:shadow-none print:bg-white print:max-w-none transition-all duration-300">
+              <div className="bg-white pt-8 pb-4 px-5 md:px-8 sticky top-0 z-10 border-b border-gray-200 shadow-sm flex justify-between items-center print:hidden">
+                <div>
+                  <h1 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">全方位體重管理</h1>
+                  <p className="text-sm text-gray-500 font-bold mt-1">科學化追蹤 ‧ 智能停滯期分析</p>
+                </div>
+              </div>
+
+              <div className="p-4 md:p-6 print:p-0">
+                {activeTab === 'strategy' && renderStrategyView()}
+                {activeTab === 'record' && renderRecordView()}
+                {activeTab === 'dashboard' && renderDashboardView()}
+                {activeTab === 'history' && renderHistoryView()}
+              </div>
+
+              <div className="fixed bottom-0 w-full md:max-w-2xl lg:max-w-4xl bg-white border-t-2 border-gray-100 flex justify-around items-center pb-safe z-50 print:hidden shadow-[0_-5px_20px_-10px_rgba(0,0,0,0.1)] transition-all duration-300">
+                <button onClick={() => setActiveTab('strategy')} className={`flex-1 flex flex-col items-center justify-center py-3.5 md:py-4 ${activeTab === 'strategy' ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600 transition-colors'}`}>
+                  <BookOpen className="w-7 h-7 md:w-8 md:h-8 mb-1" /><span className="text-xs md:text-sm font-bold">策略</span>
+                </button>
+                <button onClick={() => setActiveTab('record')} className={`flex-1 flex flex-col items-center justify-center py-3.5 md:py-4 ${activeTab === 'record' ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600 transition-colors'}`}>
+                  <div className={`${activeTab === 'record' ? 'bg-indigo-100 text-indigo-600 rounded-full p-2 -mt-7 shadow-md border-4 border-white' : ''}`}>
+                     <PlusCircle className={`w-7 h-7 md:w-8 md:h-8 mb-1 ${activeTab === 'record' ? 'w-9 h-9 md:w-10 md:h-10 m-0' : ''}`} />
+                  </div>
+                  <span className={`text-xs md:text-sm font-bold ${activeTab === 'record' ? 'mt-1.5' : ''}`}>紀錄</span>
+                </button>
+                <button onClick={() => setActiveTab('dashboard')} className={`flex-1 flex flex-col items-center justify-center py-3.5 md:py-4 ${activeTab === 'dashboard' ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600 transition-colors'}`}>
+                  <BarChart2 className="w-7 h-7 md:w-8 md:h-8 mb-1" /><span className="text-xs md:text-sm font-bold">報表</span>
+                </button>
+                <button onClick={() => setActiveTab('history')} className={`flex-1 flex flex-col items-center justify-center py-3.5 md:py-4 ${activeTab === 'history' ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600 transition-colors'}`}>
+                  <History className="w-7 h-7 md:w-8 md:h-8 mb-1" /><span className="text-xs md:text-sm font-bold">歷史</span>
+                </button>
+              </div>
+              <div className="h-safe print:hidden"></div>
+            </div>
+          );
+        }
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+
+
+```
